@@ -7,7 +7,7 @@ import (
 	"github.com/rancher-sandbox/cOS/tests/sut"
 )
 
-var _ = Describe("cOS Upgrade tests - Images unsigned", func() {
+var _ = Describe("cOS Upgrade tests - local upgrades", func() {
 	var s *sut.SUT
 
 	BeforeEach(func() {
@@ -16,14 +16,22 @@ var _ = Describe("cOS Upgrade tests - Images unsigned", func() {
 	})
 
 	Context("After install can upgrade and reset", func() {
-		When("images are not signed", func() {
-			It("upgrades to latest available (master) with --no-verify", func() {
+		When("specifying a directory to upgrade from", func() {
+			It("upgrades from the specified path", func() {
 				out, err := s.Command("source /etc/os-release && echo $VERSION")
 				Expect(err).ToNot(HaveOccurred())
 				Expect(out).ToNot(Equal(""))
 
 				version := out
-				out, err = s.Command("cos-upgrade --no-verify --docker-image quay.io/costoolkit/releases-opensuse:cos-system-0.5.1")
+
+				out, err = s.Command("mkdir /run/update && luet util unpack quay.io/costoolkit/releases-opensuse:cos-system-0.5.1 /run/update")
+				if err != nil{
+					fmt.Fprintf(GinkgoWriter, "Error from luet util unpack: %v\n", err)
+				}
+				Expect(err).ToNot(HaveOccurred())
+				Expect(out).ToNot(Equal(""))
+
+				out, err = s.Command("cos-upgrade --no-verify --directory /run/update")
 				if err != nil{
 					fmt.Fprintf(GinkgoWriter, "Error from cos-upgrade: %v\n", err)
 				}

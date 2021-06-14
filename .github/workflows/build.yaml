@@ -246,7 +246,7 @@ jobs:
     strategy:
       matrix:
         flavor: ["opensuse"]
-        test: ["test-features", "test-smoke", "test-fallback", "test-recovery", "test-upgrades-images-signed", "test-upgrades-images-unsigned"]
+        test: ["test-features", "test-smoke", "test-fallback", "test-recovery", "test-upgrades-images-signed", "test-upgrades-images-unsigned", "test-upgrades-local"]
     steps:
       - name: Install Go
         uses: actions/setup-go@v2
@@ -449,7 +449,7 @@ jobs:
       max-parallel: 1
       matrix:
         flavor: ["opensuse"]
-        test: ["test-features", "test-smoke", "test-fallback", "test-recovery", "test-upgrades-images-signed", "test-upgrades-images-unsigned"]
+        test: ["test-features", "test-smoke", "test-fallback", "test-recovery", "test-upgrades-images-signed", "test-upgrades-images-unsigned", "test-upgrades-local"]
     steps:
       - name: Install Go
         uses: actions/setup-go@v2
