@@ -1,7 +1,7 @@
 category: "toolchain"
 name: "luet"
-version: "0.16.6"
-branch: ""
+version: "0.16.99"
+branch: "unpack"
 labels:
   github.repo: "luet"
   github.owner: "mudler"
